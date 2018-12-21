@@ -3,9 +3,10 @@
 
 import db
 import random
-TEST_TX_NUM = 10000
+
+#TEST_TX_NUM = 10000
 GROUP_NUM = 100
-IN_SAME_GROUP= 0
+IN_SAME_GROUP = 0
 NUM_ADDRS = 0
 NUM_NEW_ADDRS = 0
 TX_NUM = 0
@@ -114,7 +115,9 @@ def process_tx(tx):
 # 获取用于测试的交易，该版本会查询所有交易读入内存
 # TODO: 需要改进，查询太慢
 def input_test_txs(tx_limit, tx_offset=0):
-    test_txs = db.get_new_txs(10000, 0)
+    #test_txs = db.get_new_txs(tx_limit, tx_offset)
+    test_txs = db.get_new_txs_fast()
+
     print('Finish get all test txs')
     tx = set({})
     start_tx_id = test_txs[0][0]
@@ -132,7 +135,7 @@ def input_test_txs(tx_limit, tx_offset=0):
     process_tx(list(tx))                 # 处理最后一条交易
 
     print('The first test tx_id: ', test_txs[0][0])
-    print('The last test tx_id: ', list(tx)[0])
+    #print('The last test tx_id: ', list(tx)[0])   # 集合是无序的
     #print(tx)
 
 
@@ -152,5 +155,6 @@ def print_res():
 
 if __name__ == '__main__':
     init_db()
-    input_test_txs(10000, 0)
+    input_test_txs(0, 0)
+
     print_res()

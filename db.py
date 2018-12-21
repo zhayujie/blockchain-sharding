@@ -20,7 +20,8 @@ def get_new_txs(limit, offset):
     try:
         conn = get_connect()
         cursor = conn.cursor()
-        cursor.execute('SELECT DISTINCT tx_id FROM txtest LIMIT {}'.format(limit))
+        # 注意: 要保证查询集是按tx_id顺序的
+        cursor.execute('SELECT DISTINCT tx_id FROM txtest ORDER BY tx_id LIMIT {}'.format(limit))
         txs = cursor.fetchall()             # [(txid1), (txid2) ...]
         for tx_id in txs:
             cursor.execute('SELECT * FROM txtest WHERE tx_id = {}'.format(tx_id[0]))
@@ -35,6 +36,22 @@ def get_new_txs(limit, offset):
     return res
 
     #return ((123, 2, 3), (123, 3, 5), (123, 2, 5),(125, 7, 9), (126, 8, 3))
+
+
+# 读取用于测试的交易集（快速版，不精确设置输入多少条交易）
+def get_new_txs_fast():
+    try:
+        conn = get_connect()
+        cursor = conn.cursor()
+        # 注意: 要保证查询集是按tx_id顺序的
+        cursor.execute('SELECT * FROM txtest ORDER BY tx_id')
+        results = cursor.fetchall()     # [(txid1, in1, out1), (txid1, ...), (txid2 ...)]
+    except Exception as e:
+        print(e)
+    finally:
+        cursor.close()
+        conn.close()
+    return results
 
 
 # 根据 addressId 查询 groupId，不存在返回-1
