@@ -14,7 +14,7 @@ def get_connect():
     return conn
 
 
-# 读取用于测试的交易
+# 读取用于测试的交易（此种方法对数据库资源占用极大）
 def get_new_txs(limit, offset):
     res = []
     try:
@@ -102,8 +102,7 @@ def insert_new_tx(addr_id, group_id):
 
 if __name__ == '__main__':
     print(get_group_id(1396600))
-
     insert_new_tx(99999999, 77)
-
     print(get_new_txs(100))
+
 
