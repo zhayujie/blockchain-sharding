@@ -2,15 +2,20 @@
 # Sharding v0.1
 
 import psycopg2
+from DBUtils.PooledDB import PooledDB
 
 #groups = {0:3, 1:3, 2:5, 3: 5, 4:5, 6: 99, 7: 89, 8:99, 9:89}
 
 TABLE_NAME = 'groups_temp'
 
+pool = PooledDB(psycopg2, mincached=1, maxcached=3, maxconnections=6, blocking=True,
+                host="127.0.0.1", port=5432, user="postgres", password="soraru11", database="sharding")
+
 
 def get_connect():
-    conn = psycopg2.connect(database="sharding", user="postgres", password="soraru11",
-                            host="127.0.0.1", port="5432")
+    # conn = psycopg2.connect(database="sharding", user="postgres", password="soraru11",
+    #                        host="127.0.0.1", port="5432")
+    conn = pool.connection()
     return conn
 
 
