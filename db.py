@@ -6,12 +6,14 @@ from DBUtils.PooledDB import PooledDB
 
 #groups = {0:3, 1:3, 2:5, 3: 5, 4:5, 6: 99, 7: 89, 8:99, 9:89}
 
-TABLE_NAME = 'groups_temp'
+TABLE_NAME = 'groups_temp'          # 分组表名称
+TEST_TABLE = 'txtest_100k'          # 测试表名称
 
+# 连接池
 pool = PooledDB(psycopg2, mincached=1, maxcached=3, maxconnections=6, blocking=True,
                 host="127.0.0.1", port=5432, user="postgres", password="soraru11", database="sharding")
 
-
+# 获取数据库连接
 def get_connect():
     # conn = psycopg2.connect(database="sharding", user="postgres", password="soraru11",
     #                        host="127.0.0.1", port="5432")
@@ -26,10 +28,10 @@ def get_new_txs(limit, offset):
         conn = get_connect()
         cursor = conn.cursor()
         # 注意: 要保证查询集是按tx_id顺序的
-        cursor.execute('SELECT DISTINCT tx_id FROM txtest ORDER BY tx_id LIMIT {}'.format(limit))
+        cursor.execute('SELECT DISTINCT tx_id FROM {} ORDER BY tx_id LIMIT {}'.format(TEST_TABLE, limit))
         txs = cursor.fetchall()             # [(txid1), (txid2) ...]
         for tx_id in txs:
-            cursor.execute('SELECT * FROM txtest WHERE tx_id = {}'.format(tx_id[0]))
+            cursor.execute('SELECT * FROM {} WHERE tx_id = {}'.format(TEST_TABLE, tx_id[0]))
             results = cursor.fetchall()     # [(txid1, in1, out1), (txid1, ...), (txid2 ...)]
             for r in results:
                 res.append(r)
@@ -49,7 +51,7 @@ def get_new_txs_fast():
         conn = get_connect()
         cursor = conn.cursor()
         # 注意: 要保证查询集是按tx_id顺序的
-        cursor.execute('SELECT * FROM txtest ORDER BY tx_id')
+        cursor.execute('SELECT * FROM {} ORDER BY tx_id'.format(TEST_TABLE))
         results = cursor.fetchall()     # [(txid1, in1, out1), (txid1, ...), (txid2 ...)]
     except Exception as e:
         print(e)
@@ -109,5 +111,3 @@ if __name__ == '__main__':
     print(get_group_id(1396600))
     insert_new_tx(99999999, 77)
     print(get_new_txs(100))
-
-
