@@ -1,0 +1,21 @@
+{
+    "peers": [
+        {
+            "peer_id": "123",
+            "chain_id": "abc",
+            "pub_key": "zzsdsad",
+            "ip": "192.168.5.57",
+            "port": "26657",
+            "path": "./",
+            "container_name": "tm_node1"
+        }, {
+            "peer_id": "234",
+            "chain_id": "abc",
+            "pub_key": "zsdadsa",
+            "ip": "192.168.5.56",
+            "port": "36657",
+            "path": "./",
+            "container_name": "tm_node2"
+        }
+    ]
+}

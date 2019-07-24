@@ -1,6 +1,7 @@
 from flask import Flask
 from controller.tendermint import tendermint
 from controller.system import system
+from common import config
 
 
 # 创建flask用用实例
@@ -12,10 +13,11 @@ def create_app():
     app.register_blueprint(system, url_prefix='/system')
 
     # 读取配置文件到全局
-
+    config.load_config()
     return app
 
 
 if __name__ == '__main__':
     # 启动服务
-    create_app().run(port=5000, debug=True)
+    service = create_app()
+    service.run(port=5000, threaded=True, debug=True)
