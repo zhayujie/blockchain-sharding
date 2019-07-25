@@ -1,4 +1,6 @@
 from util import file_util, json_util
+
+
 # 节点结构
 class Peer(object):
     def __init__(self, peer_id, chain_id, pub_key, ip, port):
