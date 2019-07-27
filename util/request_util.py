@@ -1,4 +1,5 @@
 import requests
+from util import json_util
 
 
 # 发送get请求
@@ -10,5 +11,6 @@ def get(url, params):
 # 发送post请求
 def post(url, data):
     header = {"content-type": "application/json"}
-    res = requests.post(url=url, data=data)
+    # post发送json数据需要指定headers，并且对data进行序列化
+    res = requests.post(url=url, data=json_util.marshal(data), headers=header)
     return res.text

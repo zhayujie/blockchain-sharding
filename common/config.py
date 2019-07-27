@@ -8,6 +8,9 @@ __network_peers = []
 # 配置文件路径
 CONFIG_PATH = "./network_config.json"
 
+# 服务监听端口
+PORT = 5000
+
 
 # 加载配置文件
 def load_config():
@@ -28,6 +31,14 @@ def load_config():
 # 获取网络节点信息
 def get_config():
     return __network_peers
+
+
+# 根据节点id查询所在机器ip
+def get_peer_ip(peer_id):
+    for peer in __network_peers:
+        if peer.peer_id == peer_id:
+            return peer.ip
+    return None
 
 
 if __name__ == '__main__':
