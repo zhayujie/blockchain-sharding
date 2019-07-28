@@ -6,15 +6,15 @@
             "pub_key": "zzsdsad",
             "ip": "127.0.0.1",
             "port": "26657",
-            "path": "./",
+            "path": "/Users/zyj/Desktop/node1/node1_data",
             "container_name": "tm_node1"
         }, {
             "peer_id": "234",
-            "chain_id": "abc",
+            "chain_id": "def",
             "pub_key": "zsdadsa",
             "ip": "192.168.5.56",
             "port": "36657",
-            "path": "./",
+            "path": "/Users/zyj/Desktop/node1/node2_data",
             "container_name": "tm_node2"
         }
     ]

@@ -1,0 +1,18 @@
+version: '2.0'
+services:
+  CONTAINER_NAME:
+    image: tendermint/tendermint:latest
+    container_name: CONTAINER_NAME
+    hostname: CONTAINER_NAME
+    tty: 'true'
+    ports:
+    - ABCI_PORT:26657
+    - P2P_PORT:26656
+    volumes:
+    - PATH:/tendermint
+    environment:
+    - TASKID=C
+    entrypoint:
+    - sh
+    - -c
+    - 'tendermint node --p2p.seeds=PEER_ID@IP:P2P_PORT --proxy_app=persistent_kvstore'

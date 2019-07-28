@@ -4,6 +4,7 @@ from common.log import logger
 
 def exec_cmd(cmd):
     try:
+        logger.info("执行命令: " + cmd)
         res = os.system(cmd)
         return True if (res == 0) else False
     except Exception as e:
