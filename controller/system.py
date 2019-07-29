@@ -3,7 +3,7 @@ from flask import Blueprint, request, jsonify
 from common.log import logger
 from util import json_util
 from model.result_dto import result_dto
-from service import peer_service
+from service import system_service
 
 system = Blueprint('system', __name__)
 
@@ -17,7 +17,7 @@ def do_adjust():
         if not args.get('peer_id') or not args.get('chain_id'):
             return result_dto(False, 401, "参数错误", "")
         # 执行分片移动
-        peer_service.do_move(args.get('peer_id'), args.get('chain_id'))
+        system_service.do_move(args.get('peer_id'), args.get('chain_id'))
         return result_dto(True, 200, 'success', '')
     except Exception as e:
         logger.error(e)

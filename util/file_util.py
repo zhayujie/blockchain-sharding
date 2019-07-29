@@ -1,5 +1,6 @@
 import os
 import shutil
+import json
 
 
 # 读取文件所有内容
@@ -49,8 +50,17 @@ def join(d, path):
     return os.path.join(d, path)
 
 
+# 获取json文件内容
+def get_json(path):
+    if is_exist(path):
+        with open(path, 'r', encoding='utf-8') as f:
+            # 注意, loads() 是从字符串中读取
+            return json.load(f)
+    else:
+        raise Exception('文件不存在')
+
+
 if __name__ == '__main__':
     file_path = "../network_config.json"
     print(is_exist(file_path))
     print(join('/ubuntu', 'data'))
-
