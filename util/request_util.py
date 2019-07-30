@@ -3,7 +3,7 @@ from util import json_util
 
 
 # 发送get请求
-def get(url, params):
+def get(url, params=None):
     res = requests.get(url=url, params=params)
     return res.text
 

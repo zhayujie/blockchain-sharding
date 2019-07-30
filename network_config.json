@@ -1,20 +1,20 @@
 {
     "peers": [
         {
-            "peer_id": "123",
-            "chain_id": "abc",
-            "pub_key": "zzsdsad",
-            "ip": "127.0.0.1",
+            "peer_id": "55d696665d9672234013ac97f2a6c36321a05f29",
+            "chain_id": "test-chain-IwI1ic",
+            "pub_key": "Lc3DcDib9YxjC78og7i2xP9kB8xb66moGIx9jKnCqro=",
+            "ip": "10.48.126.99",
             "port": "26657",
             "path": "/Users/zyj/Desktop/node1/node1_data",
             "container_name": "tm_node1"
         }, {
-            "peer_id": "234",
-            "chain_id": "def",
-            "pub_key": "zsdadsa",
-            "ip": "192.168.5.56",
+            "peer_id": "eb49a2a375c94f1e3f9252380f50d7b56996cc91",
+            "chain_id": "test-chain-xP22Ep",
+            "pub_key": "wXTm8Gr3flXwIdFToKwaaqtJu9t8T/HGYL6LHdI3gNQ=",
+            "ip": "10.48.126.99",
             "port": "36657",
-            "path": "/Users/zyj/Desktop/node1/node2_data",
+            "path": "/Users/zyj/Desktop/node2/node2_data",
             "container_name": "tm_node2"
         }
     ]

@@ -23,8 +23,8 @@ def move_peer():
         peer_service.transfer_move_req(args.get('peer_id'), args.get('chain_id'))
         return result_dto(True, 200, "成功", "")
     except Exception as e:
-        logger.error("分片调整失败", e)
-        return result_dto(False, 500, "失败", "")
+        logger.error("分片调整失败" + str(e))
+        return result_dto(False, 500, "失败", str(e))
 
 
 # 查询所有peer的信息

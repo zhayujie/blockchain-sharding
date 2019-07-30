@@ -8,6 +8,9 @@ __network_peers = []
 # 配置文件路径
 CONFIG_PATH = './network_config.json'
 
+# 服务监听ip
+HOST = '0.0.0.0'
+
 # 服务监听端口
 PORT = 5000
 

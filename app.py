@@ -20,4 +20,4 @@ def create_app():
 if __name__ == '__main__':
     # 启动服务
     service = create_app()
-    service.run(port=config.PORT, threaded=True, debug=True)
+    service.run(host=config.HOST, port=config.PORT, threaded=True, debug=True)

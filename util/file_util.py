@@ -29,7 +29,7 @@ def copy(src, dst):
     if is_exist(src) and is_exist(dst):
         shutil.copy(src, dst)
     else:
-        raise Exception('复制失败: 路径不存在')
+        raise Exception('复制失败: 路径不存在, src: ' + src + ' dst: ' + dst)
 
 
 # 创建目录
@@ -60,7 +60,15 @@ def get_json(path):
         raise Exception('文件不存在')
 
 
+# 将json数据写入文件
+def write_json(data, path):
+    with open(path, 'w', encoding='utf-8') as f:
+        # 注意, loads() 是从字符串中读取
+        return json.dump(data, f)
+
+
 if __name__ == '__main__':
     file_path = "../network_config.json"
     print(is_exist(file_path))
     print(join('/ubuntu', 'data'))
+    print(os.getcwd())

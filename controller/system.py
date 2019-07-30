@@ -15,19 +15,23 @@ def do_adjust():
         args = request.get_json()
         logger.info(args)
         if not args.get('peer_id') or not args.get('chain_id'):
-            return result_dto(False, 401, "参数错误", "")
+            return result_dto(False, 401, '参数错误', '')
         # 执行分片移动
         system_service.do_move(args.get('peer_id'), args.get('chain_id'))
         return result_dto(True, 200, 'success', '')
     except Exception as e:
         logger.error(e)
-        return result_dto(False, 501, 'server failed', '')
+        return result_dto(False, 501, 'server failed', str(e))
 
 
 # 向目标分片节点请求genesis.json文件
 @system.route('/getGenesis', methods=['GET'])
 def get_genesis():
-    return 'getGenesis'
+    target_id = request.args.get('target_id')
+    if not target_id:
+        return result_dto(False, 401, 'args missing', '')
+    # logger.info('target_id: ' + target_id)
+    return result_dto(True, 200, 'genesis', system_service.read_genesis(target_id))
 
 
 @system.errorhandler(Exception)
