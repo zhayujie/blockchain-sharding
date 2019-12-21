@@ -1,48 +1,65 @@
 from util import json_util, file_util, request_util
-from common import config
+from common.config import conf
 from common.log import logger
-import time
-
-URL = str.format('http://{}/v2-beta/projects/{}/services', config.RANCHER_ADDRESS, config.PROJECT_ID)
+from common import config
+import os
 
 
 # 删除指定服务名称的service
-def delete_service(peer_name):
-    service_id = _get_service_id(peer_name)
-    url = str.format(URL + '/{}', service_id)
+def delete_service(service_name):
+    url = str.format('http://{}/v2-beta/projects/{}/services', conf().RANCHER_ADDRESS, conf().PROJECT_ID)
+    service_id = _get_service_id(service_name)
+    url = str.format(url + '/{}', service_id)
     res = request_util.delete(url)
     logger.info("节点删除中: " + res)
 
 
 # 启动服务
-def create_service(peer_name, neighbors):
+def create_service(service_name, neighbors):
+    url = str.format('http://{}/v2-beta/projects/{}/services', conf().RANCHER_ADDRESS, conf().PROJECT_ID)
     # 读取配置文件
-    args_str = file_util.read(config.RANCHER_TEMPLATE_PATH)
+    args_str = file_util.read(conf().RANCHER_TEMPLATE_PATH)
 
     # 设置参数
-    args = json_util.un_marshal(args_str)
-    args['stackId'] = config.STACK_ID
-    args['name'] = peer_name
-    args['launchConfig']['hostname'] = peer_name
-    print(args)
+    args = _set_docker_config(args_str, service_name, neighbors)
 
-    logger.info(URL)
+    logger.info(url)
 
-    res = request_util.post(URL, args)
+    res = request_util.post(url, args)
     logger.info('节点创建成功: ' + res)
 
 
 # 根据服务名称获取服务id
 def _get_service_id(service_name):
-    res = json_util.un_marshal(request_util.get(URL))
+    url = str.format('http://{}/v2-beta/projects/{}/services', conf().RANCHER_ADDRESS, conf().PROJECT_ID)
+    res = json_util.un_marshal(request_util.get(url))
     services = res.get('data')
     for service in services:
         if service.get('name') == service_name:
             return service.get('id')
 
 
+# 更新docker配置
+def _set_docker_config(args_str, service_name, neighbors):
+    args = json_util.un_marshal(args_str)
+    peer_dir = os.path.join(conf().NODE_DIR, service_name)
+    args['stackId'] = conf().STACK_ID
+    args['name'] = service_name
+    args['launchConfig']['hostname'] = service_name
+    args['launchConfig']['dataVolumes'] = [str.format('{}:/tendermint', peer_dir)]
+    p2p_str = ''
+    if neighbors:
+        p2p_str = '--p2p.persistent_peers=' + neighbors
+    entry_point = ['sh', '-c', str.format('tendermint node {} --proxy_app=persistent_kvstore', p2p_str)]
+    args['launchConfig']['entryPoint'] = entry_point
+    print(args)
+    return args
+
+
 if __name__ == '__main__':
-    create_service('TTANode2', '123')
-    time.sleep(15)
-    delete_service('TTANode2')
+    config.load_config('dev')
+    # create_service('TTANode1', '')
+    # time.sleep(15)
+    delete_service('TTANode1')
     # logger.info('hello')
+    pass

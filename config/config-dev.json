@@ -1,0 +1,14 @@
+{
+  "ROOT_PATH": "./network_config.json",
+  "DOCKER_FILE_NAME": "docker-compose.yaml",
+  "HOST": "0.0.0.0",
+  "PORT": "5000",
+  "RANCHER_ADDRESS": "127.0.0.1:8080",
+  "PROJECT_ID": "1a5",
+  "STACK_ID": "1st10",
+  "NODE_DIR": "/Users/zyj/Desktop/node1",
+  "MACHINE_IPS": ["10.77.70.135"],
+  "USER_NAME": "centos",
+  "IDENTITY": "-i ~/.ssh/id_rsa_768",
+  "DEBUG": true
+}

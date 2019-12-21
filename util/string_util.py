@@ -1,8 +1,8 @@
 import base64
 
 
-def is_empty(st):
-    return True if (not st) else st.strip() == ''
+def is_empty(s):
+    return True if (not s) else st.strip() == ''
 
 
 def base64ToHex(base64_str):

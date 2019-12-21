@@ -63,7 +63,7 @@ def get_json(path):
 # 将json数据写入文件
 def write_json(data, path):
     with open(path, 'w', encoding='utf-8') as f:
-        # 注意, loads() 是从字符串中读取
+        # 注意, dump() 是写入dict
         return json.dump(data, f)
 
 

@@ -1,49 +1,36 @@
 from util import file_util, json_util
-from model.peer import Peer
 from common.log import logger
 import os
 import root
 
-# 私有全局变量，网络中所有节点的信息
-__network_peers = []
 
-# 项目根目录
-ROOT_PATH = root.get_root()
+class Config:
+    VALIDATOR_STATE_PATH = ''
+    RANCHER_TEMPLATE_PATH = ''
+    ROOT_PATH = ''
+    DOCKER_FILE_NAME = ''
+    HOST = ''
+    PORT = ''
+    RANCHER_ADDRESS = ''
+    PROJECT_ID = ''
+    STACK_ID = ''
+    MACHINE_IPS = []
+    USER_NAME = ''
+    IDENTITY = ''
+    NODE_DIR = ''
+    DEBUG = True
 
-# 配置文件路径
-CONFIG_PATH = './network_config.json'
-
-# 服务监听ip
-HOST = '0.0.0.0'
-
-# 服务监听端口
-PORT = 5000
-
-# docker配置文件名称
-DOCKER_FILE_NAME = 'docker-compose.yaml'
-
-# priv_validator_state.json 文件路径
-VALIDATOR_STATE_PATH = os.path.join(ROOT_PATH, 'config/priv_validator_state.json')
-
-# rancher模版文件路径
-RANCHER_TEMPLATE_PATH = os.path.join(ROOT_PATH, 'config/rancher-template.json')
-
-# rancher 服务器地址
-# RANCHER_ADDRESS = "10.77.135.8888"
-RANCHER_ADDRESS = "127.0.0.1:8080"
-
-# env ID
-PROJECT_ID = "1a5"
-
-# stack ID
-STACK_ID = "1st10"
+    def __init__(self):
+        pass
 
 
-
+config = Config()
 
 
 # 加载配置文件
-def load_config(config_path=CONFIG_PATH):
+def load_config(env):
+    global config
+    config_path = os.path.join(root.get_root(), str.format('config/config-{}.json', env))
     # 读取配置文件
     try:
         if not file_util.is_exist(config_path):
@@ -51,36 +38,32 @@ def load_config(config_path=CONFIG_PATH):
             return
         config_str = file_util.read(config_path)
         # 将json字符串反序列化为dict类型
-        peers_config = json_util.un_marshal(config_str)
-        for peer_config in peers_config['peers']:
-            # 将dict转化为Peer对象, 并在list中追加
-            __network_peers.append(Peer.dict2peer(peer_config))
+        con = json_util.un_marshal(config_str)
+        set_config(con)
     except Exception as e:
         logger.error(e)
 
 
-# 获取网络节点信息
-def get_config():
-    return __network_peers
+def set_config(con):
+    config.VALIDATOR_STATE_PATH = os.path.join(root.get_root(), 'config/priv_validator_state.json')
+    config.RANCHER_TEMPLATE_PATH = os.path.join(root.get_root(), 'config/rancher-template.json')
+    config.ROOT_PATH = con.get('ROOT_PATH')
+    config.DOCKER_FILE_NAME = con.get('DOCKER_FILE_NAME')
+    config.HOST = con.get('HOST')
+    config.PORT = con.get('PORT')
+    config.RANCHER_ADDRESS = con.get('RANCHER_ADDRESS')
+    config.PROJECT_ID = con.get('PROJECT_ID')
+    config.STACK_ID = con.get('STACK_ID')
+    config.MACHINE_IPS = con.get('MACHINE_IPS')
+    config.USER_NAME = con.get('USER_NAME')
+    config.IDENTITY = con.get('IDENTITY')
+    config.NODE_DIR = con.get('NODE_DIR')
+    config.DEBUG = con.get('DEBUG')
 
-
-# 根据节点id查询所在机器ip
-def get_peer_by_id(peer_id):
-    for peer_info in __network_peers:
-        if peer_info.peer_id == peer_id:
-            return peer_info
-    raise Exception('未找到节点')
-
-
-# 根据chain_id获取其中某一个节点
-def get_peer_by_chain_id(chain_id):
-    for peer_info in __network_peers:
-        if peer_info.chain_id == chain_id:
-            return peer_info
-    raise Exception('未找到节点')
+def conf():
+    return config
 
 
 if __name__ == '__main__':
-    print(RANCHER_TEMPLATE_PATH)
-
+    load_config('prod')
 
