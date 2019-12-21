@@ -14,3 +14,9 @@ def post(url, data):
     # post发送json数据需要指定headers，并且对data进行序列化
     res = requests.post(url=url, data=json_util.marshal(data), headers=header)
     return res.text
+
+
+# 发送delete请求
+def delete(url):
+    res = requests.delete(url)
+    return res.text

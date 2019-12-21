@@ -1,9 +1,14 @@
 from util import file_util, json_util
 from model.peer import Peer
 from common.log import logger
+import os
+import root
 
 # 私有全局变量，网络中所有节点的信息
 __network_peers = []
+
+# 项目根目录
+ROOT_PATH = root.get_root()
 
 # 配置文件路径
 CONFIG_PATH = './network_config.json'
@@ -16,6 +21,25 @@ PORT = 5000
 
 # docker配置文件名称
 DOCKER_FILE_NAME = 'docker-compose.yaml'
+
+# priv_validator_state.json 文件路径
+VALIDATOR_STATE_PATH = os.path.join(ROOT_PATH, 'config/priv_validator_state.json')
+
+# rancher模版文件路径
+RANCHER_TEMPLATE_PATH = os.path.join(ROOT_PATH, 'config/rancher-template.json')
+
+# rancher 服务器地址
+# RANCHER_ADDRESS = "10.77.135.8888"
+RANCHER_ADDRESS = "127.0.0.1:8080"
+
+# env ID
+PROJECT_ID = "1a5"
+
+# stack ID
+STACK_ID = "1st10"
+
+
+
 
 
 # 加载配置文件
@@ -57,9 +81,6 @@ def get_peer_by_chain_id(chain_id):
 
 
 if __name__ == '__main__':
-    load_config("../network_config.json")
-    peer = get_peer_by_id('123')
-    print(peer.container_name)
-    # load_config()
-    # print(get_config()[0].to_string())
+    print(RANCHER_TEMPLATE_PATH)
+
 

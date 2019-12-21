@@ -3,6 +3,7 @@ from common.log import logger
 from util import shell_util, request_util, json_util, file_util, yaml_util, string_util
 import os
 import time
+import root
 
 # priv_validator_state.json 文件路径
 VALIDATOR_STATE_PATH = os.path.join(os.getcwd(), 'config/priv_validator_state.json')
@@ -119,6 +120,8 @@ def read_genesis(target_id):
 
 
 if __name__ == '__main__':
-    config.load_config("../network_config.json")
-    do_move("234", "abc")
-    print(read_genesis('/Users/zyj/Desktop/node1/node1_data/config/genesis.json'))
+    # config.load_config("../network_config.json")
+    # do_move("234", "abc")
+    # print(read_genesis('/Users/zyj/Desktop/node1/node1_data/config/genesis.json'))
+    print(VALIDATOR_STATE_PATH)
+    print(root.get_root())

@@ -1,7 +1,6 @@
 # 外部接口
 from flask import Blueprint, request, jsonify
 from common.log import logger
-from util import json_util
 from model.result_dto import result_dto
 from service import peer_service
 
