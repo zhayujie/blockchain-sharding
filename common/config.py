@@ -13,7 +13,7 @@ class Config:
     PORT = ''
     RANCHER_ADDRESS = ''
     PROJECT_ID = ''
-    STACK_ID = ''
+    STACK_NAME = ''
     MACHINE_IPS = []
     USER_NAME = ''
     IDENTITY = ''
@@ -53,7 +53,7 @@ def set_config(con):
     config.PORT = con.get('PORT')
     config.RANCHER_ADDRESS = con.get('RANCHER_ADDRESS')
     config.PROJECT_ID = con.get('PROJECT_ID')
-    config.STACK_ID = con.get('STACK_ID')
+    config.STACK_NAME = con.get('STACK_NAME')
     config.MACHINE_IPS = con.get('MACHINE_IPS')
     config.USER_NAME = con.get('USER_NAME')
     config.IDENTITY = con.get('IDENTITY')

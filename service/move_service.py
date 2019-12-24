@@ -54,7 +54,7 @@ def _distribute_file(ip, source_dir, target_dir):
     if target_dir and '/home/centos/' in target_dir:
         del_str = 'rm -rf ' + target_dir
     # 删除文件
-    del_cmd = str.format('ssh {} {}@{} {}', conf().IDENTITY, conf().USER_NAME, ip, del_str)
+    del_cmd = str.format('ssh {} {}@{} sudo {}', conf().IDENTITY, conf().USER_NAME, ip, del_str)
     res_del = shell_util.exec_cmd(del_cmd)
     logger.info('删除: ' + str(res_del))
 

@@ -3,7 +3,7 @@
 	"assignServiceIpAddress": false,
 	"startOnCreate": true,
 	"type": "service",
-	"stackId": "1st6",
+	"stackId": "1st11",
 	"launchConfig": {
 		"instanceTriggeredStop": "stop",
 		"kind": "container",
@@ -37,7 +37,7 @@
 			"config": {}
 		},
 		"dataVolumesFromLaunchConfigs": [],
-		"imageUuid": "docker:tendermint/tendermint:latest",
+		"imageUuid": "docker:10.77.70.142:5000/tendermint:v0.4",
 		"ports": [],
 		"entryPoint": ["sh", "-c", "tendermint node --proxy_app=persistent_kvstore"],
 		"hostname": "TTANode1",
