@@ -16,20 +16,23 @@ def do_move(peer_name, neighbors, genesis):
     rancher_service.delete_service(peer_name)
     time.sleep(2)
 
-    # 清理数据文件
-    _update_files(service_name=peer_name, genesis=genesis)
-
     # 启动新的服务
     rancher_service.create_service(peer_name, neighbors)
 
 
-# 更新数据文件
-def _update_files(service_name, genesis):
+def do_create():
+    pass
+
+
+def do_delete():
+    pass
+
+
+def _delete_files(service_name):
     # 节点目录为 数据根目录 加上 节点名称
     peer_dir = os.path.join(conf().NODE_DIR, service_name)
     data_dir = os.path.join(peer_dir, 'data')
-    genesis_path = os.path.join(peer_dir, 'config/genesis.json')
-    logger.info('开始更新配置文件')
+    logger.info('开始清空数据文件')
     # 删除data文件
     file_util.remove(data_dir)
 
@@ -37,6 +40,13 @@ def _update_files(service_name, genesis):
     file_util.make_dir(data_dir)
     file_util.copy(conf().VALIDATOR_STATE_PATH, data_dir)
 
+
+def _update_genesis(service_name, new_name, genesis):
+    # 节点目录为 数据根目录 加上 节点名称
+    peer_dir = os.path.join(conf().NODE_DIR, service_name)
+    data_dir = os.path.join(peer_dir, 'data')
+
+    genesis_path = os.path.join(peer_dir, 'config/genesis.json')
     # 更新genesis.json文件
     if isinstance(genesis, str):
         genesis = json_util.un_marshal(genesis)
