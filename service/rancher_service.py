@@ -57,6 +57,7 @@ def _set_docker_config(args_str, service_name, neighbors):
     args['name'] = service_name
     args['launchConfig']['hostname'] = service_name
     args['launchConfig']['dataVolumes'] = [str.format('{}:/tendermint', peer_dir)]
+    args['launchConfig']['imageUuid'] = conf().IMAGE_ID
     p2p_str = ''
     if neighbors:
         p2p_str = '--p2p.persistent_peers=' + neighbors
@@ -68,7 +69,7 @@ def _set_docker_config(args_str, service_name, neighbors):
 
 if __name__ == '__main__':
     config.load_config('dev')
-    create_service('TTANode1', '')
+    create_service('TTANode3', '')
     # time.sleep(15)
     # delete_service('TTANode1')
     # logger.info('hello')

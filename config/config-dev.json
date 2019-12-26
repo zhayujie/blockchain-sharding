@@ -10,5 +10,6 @@
   "MACHINE_IPS": ["10.77.70.135"],
   "USER_NAME": "centos",
   "IDENTITY": "-i ~/.ssh/id_rsa_768",
-  "DEBUG": true
+  "DEBUG": true,
+  "IMAGE_ID": "docker:tendermint/tendermint:latest"
 }

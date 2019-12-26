@@ -32,6 +32,22 @@ def copy(src, dst):
         raise Exception('复制失败: 路径不存在, src: ' + src + ' dst: ' + dst)
 
 
+# 复制整个目录
+def copy_dir(src, dst):
+    if is_exist(src):
+        shutil.copytree(src, dst)
+    else:
+        raise Exception('复制失败: 路径不存在, src: ' + src + ' dst: ' + dst)
+
+
+# 移动目录
+def move_dir(src, dst):
+    if not is_exist(dst):
+        shutil.move(src, dst)
+    else:
+        raise Exception('路径已存在')
+
+
 # 创建目录
 def make_dir(path):
     if not is_exist(path):
@@ -68,7 +84,8 @@ def write_json(data, path):
 
 
 if __name__ == '__main__':
-    file_path = "../network_config.json"
-    print(is_exist(file_path))
+    # file_path = "../network_config.json"
+    # print(is_exist(file_path))
     print(join('/ubuntu', 'data'))
     print(os.getcwd())
+    copy_dir('/Users/zyj/Desktop/sharding', '/Users/zyj/Desktop/sharding-bak')
