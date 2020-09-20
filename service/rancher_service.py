@@ -56,7 +56,7 @@ def _set_docker_config(args_str, service_name, neighbors):
     args['stackId'] = _get_stack_id(conf().STACK_NAME)
     args['name'] = service_name
     args['launchConfig']['hostname'] = service_name
-    args['launchConfig']['dataVolumes'] = [str.format('{}:/tendermint', peer_dir)]
+    args['launchConfig']['dataVolumes'] = [str.format('/root/NFS500/test/{}/config:/tendermint/config', service_name)]
     args['launchConfig']['imageUuid'] = conf().IMAGE_ID
     p2p_str = ''
     if neighbors:
